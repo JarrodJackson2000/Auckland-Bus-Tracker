@@ -10,14 +10,13 @@ BusRoute.init(
     route_number: { type: DataTypes.STRING, allowNull: false },
     latitude: { type: DataTypes.FLOAT, allowNull: false },
     longitude: { type: DataTypes.FLOAT, allowNull: false },
-    // Remove `created_at` if `timestamps: true` is enabled
   },
   {
     sequelize: sequelizeInstance,
     modelName: "bus_routes",
     timestamps: true, // Automatically adds `createdAt` and `updatedAt`
     freezeTableName: true,
-    underscored: true, // Use snake case for column names (e.g., `created_at`)
+    underscored: true,
   }
 );
 

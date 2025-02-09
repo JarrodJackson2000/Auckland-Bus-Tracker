@@ -17,14 +17,13 @@ Favourite.init(
       allowNull: false,
       references: { model: "bus_routes", key: "id" },
     },
-    // Remove `created_at` if `timestamps: true` is enabled
   },
   {
     sequelize: sequelizeInstance,
     modelName: "favourites",
     timestamps: true, // Automatically adds `createdAt` and `updatedAt`
     freezeTableName: true,
-    underscored: true, // Use snake case for column names (e.g., `created_at`)
+    underscored: true,
   }
 );
 
