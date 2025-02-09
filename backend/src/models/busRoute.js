@@ -1,8 +1,9 @@
-const { DataTypes, Model } = require("sequelize"); // Use `Model`, not `Models`
+// models/busRoute.js
+const { DataTypes, Model } = require("sequelize");
 let dbConnect = require("../../config/dbConnect");
 const sequelizeInstance = dbConnect.Sequelize;
 
-class BusRoute extends Model {} // Use `Model`, not `Models`
+class BusRoute extends Model {}
 
 BusRoute.init(
   {
@@ -14,10 +15,10 @@ BusRoute.init(
   {
     sequelize: sequelizeInstance,
     modelName: "bus_routes",
-    timestamps: true, // Automatically adds `createdAt` and `updatedAt`
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
   }
 );
 
-module.exports = BusRoute;
+module.exports = BusRoute; // Ensure the class is exported

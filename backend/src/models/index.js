@@ -1,7 +1,8 @@
 "use strict";
 const User = require("./user");
-const BusRoute = require("./busRoutes");
+const BusRoute = require("./busRoute");
 const Favourite = require("./favourite");
+const BusLocation = require("./busLocation");
 
 // Sync tables
 
@@ -12,6 +13,7 @@ async function init() {
     await User.sync;
     await BusRoute.sync;
     await Favourite.sync;
+    await BusLocation.sync;
 
     console.log("All tables were created successfully.");
   } catch (error) {
@@ -21,4 +23,4 @@ async function init() {
 
 init();
 
-module.exports = { User, BusRoute, Favourite };
+module.exports = { User, BusRoute, Favourite, BusLocation };

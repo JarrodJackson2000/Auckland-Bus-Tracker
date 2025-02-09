@@ -12,7 +12,7 @@ for (const envVar of requiredEnvVars) {
 }
 
 // Import and initialize the database models
-const { User, BusRoute, Favourite } = require("./src/models");
+const { User, BusRoute, Favourite, BusLocation } = require("./src/models");
 
 // Call the init function to sync tables
 const init = async () => {
@@ -20,6 +20,7 @@ const init = async () => {
     console.log("Syncing tables...");
     await User.sync;
     await BusRoute.sync;
+    await BusLocation.sync;
     await Favourite.sync;
     console.log("All tables were created successfully.");
   } catch (error) {
