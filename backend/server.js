@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const { fetchAndStoreBusData } = require("./src/workers/busDataWorker");
 
 // Validate required environment variables
 const requiredEnvVars = ["DB_NAME", "DB_USER", "DB_PASSWORD", "DB_HOST"];
@@ -45,3 +46,5 @@ init().then(() => {
     console.log(`Server is running on port ${PORT}.`);
   });
 });
+
+setInterval(fetchAndStoreBusData, 10000); // Every 10 seconds

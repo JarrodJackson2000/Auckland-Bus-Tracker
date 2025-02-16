@@ -1,5 +1,5 @@
-// services/busService.js
 const { insertBusData } = require("../models/busLocationModel");
+const { insertRoute } = require("../models/busRouteModel");
 const {
   getRoutes,
   getBusLocationsByRoute,
@@ -26,12 +26,16 @@ const saveBusData = async (busData) => {
 
 const fetchAndSaveRoutes = async () => {
   try {
+    console.log("Fetching routes from API...");
     const routes = await getRoutes();
     console.log("Fetched routes:", routes);
-    // Save routes to the database (if needed)
-    // You can create a function in `busRouteModel.js` to save routes
+
+    // Save routes to the database
+    console.log("Saving routes to database...");
+    await insertRoute(routes);
+    console.log("Routes saved to database.");
   } catch (error) {
-    console.error("Error fetching routes:", error);
+    console.error("Error fetching or saving routes:", error);
     throw error;
   }
 };

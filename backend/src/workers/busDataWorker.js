@@ -1,5 +1,4 @@
-// workers/busDataWorker.js
-const { getBusLocations } = require("../services/atApiService");
+const { getBusLocations, getRoutes } = require("../services/atApiService");
 const {
   saveBusData,
   fetchAndSaveRoutes,
@@ -9,11 +8,12 @@ const { broadcastBusUpdate } = require("../websocket/socketServer");
 
 const fetchAndStoreBusData = async () => {
   try {
+    console.log("Running bus data worker...");
     // Fetch all routes
     await fetchAndSaveRoutes();
 
     // Fetch bus locations for all routes
-    const routes = await getRoutes(); // Assuming you export `getRoutes` from `atApiService`
+    const routes = await getRoutes();
     for (const route of routes) {
       await fetchAndSaveBusLocationsByRoute(route.route_id);
     }
@@ -27,5 +27,4 @@ const fetchAndStoreBusData = async () => {
   }
 };
 
-// Run the worker at a fixed interval
-setInterval(fetchAndStoreBusData, 10000); // Every 10 seconds
+exports.fetchAndStoreBusData = fetchAndStoreBusData;

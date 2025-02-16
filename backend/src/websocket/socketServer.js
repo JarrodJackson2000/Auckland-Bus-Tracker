@@ -1,6 +1,6 @@
 const http = require("http");
 const socketIo = require("socket.io");
-const { getLatestBusData } = require("../models/busModel");
+const { getLatestBusData } = require("../models/busLocationModel");
 
 const server = http.createServer();
 const io = socketIo(server);
@@ -24,5 +24,11 @@ io.on("connection", (socket) => {
 const broadcastBusUpdate = (busData) => {
   io.emit("bus-update", busData);
 };
+
+// Start the server
+const PORT = process.env.SOCKET_PORT || 3002;
+server.listen(PORT, () => {
+  console.log(`WebSocket server running on port ${PORT}`);
+});
 
 module.exports = { server, broadcastBusUpdate };

@@ -1,7 +1,5 @@
-// models/busLocation.js
 const { DataTypes, Model } = require("sequelize");
-let dbConnect = require("../../config/dbConnect");
-const sequelizeInstance = dbConnect.Sequelize;
+const sequelizeInstance = require("../../config/dbConnect").Sequelize; // Corrected path
 
 class BusLocation extends Model {}
 

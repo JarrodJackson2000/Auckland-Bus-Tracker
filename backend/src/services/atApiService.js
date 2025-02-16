@@ -1,12 +1,23 @@
-// services/atApiService.js
 const axios = require("axios");
 const gtfs = require("gtfs-realtime-bindings");
 require("dotenv").config();
 
+const getRoutes = async () => {
+  try {
+    const response = await axios.get("https://api.at.govt.nz/gtfs/v3/routes", {
+      headers: { "Ocp-Apim-Subscription-Key": process.env.AT_API_KEY },
+    });
+    return response.data.data; // Return only the `data` array
+  } catch (error) {
+    console.error("Error fetching routes:", error);
+    throw error;
+  }
+};
+
 const getBusLocationsByRoute = async (routeId) => {
   try {
     const response = await axios.get(
-      "https://api.at.govt.nz/realtime/gtfs-realtime/trip-updates",
+      "https://api.at.govt.nz/gtfs/v3/vehiclePositions",
       {
         headers: { "Ocp-Apim-Subscription-Key": process.env.AT_API_KEY },
         responseType: "arraybuffer", // Required for protobuf
@@ -19,7 +30,9 @@ const getBusLocationsByRoute = async (routeId) => {
     // Filter by route_id
     const filteredEntities = feed.entity.filter(
       (entity) =>
-        entity.tripUpdate && entity.tripUpdate.trip.routeId === routeId
+        entity.vehicle &&
+        entity.vehicle.trip &&
+        entity.vehicle.trip.routeId === routeId
     );
 
     return { entity: filteredEntities }; // Return filtered data
@@ -29,4 +42,4 @@ const getBusLocationsByRoute = async (routeId) => {
   }
 };
 
-module.exports = { getBusLocations, getRoutes, getBusLocationsByRoute };
+module.exports = { getRoutes, getBusLocationsByRoute };
